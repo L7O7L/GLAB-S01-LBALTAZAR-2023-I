@@ -1,63 +1,62 @@
-var http = require('http');
-fs = require('fs');
+const express = require('express')
 
-http.createServer(function(req, res){
+const app = express()
 
-    if (req.url == '/servicios.html') {
+app.get('/', (req, res) => {
 
-        fs.readFile('./servicios.html', function(err, html){
+    res.sendFile('./static/inicio.html', {
 
-            res.write(html);
-            res.end();
-    
-        });
+        root: __dirname
 
-    }
-    
-    if (req.url == '/nosotros.html') {
+    });
 
-        fs.readFile('./nosotros.html', function(err, html){
+});
 
-            res.write(html);
-            res.end();
-    
-        });
+app.get('/catalogo_clientes', (req, res) => {
 
-    }
+    res.sendFile('./static/catalogo_clientes.html', {
 
-    if (req.url == '/contactenos.html') {
+        root: __dirname
 
-        fs.readFile('./contactenos.html', function(err, html){
+    });
 
-            res.write(html);
-            res.end();
-    
-        });
+});
 
-    }
-    
-    if (req.url == '/catalogo_clientes.html') {
+app.get('/contactenos', (req, res) => {
 
-        fs.readFile('./catalogo_clientes.html', function(err, html){
+    res.sendFile('./static/contactenos.html', {
 
-            res.write(html);
-            res.end();
-    
-        });
+        root: __dirname
 
-    }
-    
-    if (req.url == '/') {
+    });
 
-        fs.readFile('./inicio.html', function(err, html){
+});
 
-            res.write(html);
-            res.end();
-    
-        });
+app.get('/nosotros', (req, res) => {
 
-    }
+    res.sendFile('./static/nosotros.html', {
 
-}).listen(8080);
+        root: __dirname
 
+    });
 
+});
+
+app.get('/servicios', (req, res) => {
+
+    res.sendFile('./static/servicios.html', {
+
+        root: __dirname
+
+    });
+
+});
+
+app.use((req, res) => {
+
+    res.status(404).send('<h1>No se encontro tu pagina.......!!!!</h1>')
+
+});
+
+app.listen(3000);
+console.log(`Server on port ${3000}`);
